@@ -36,6 +36,52 @@ CREATE TABLE district (
 
 ALTER TABLE district ADD CONSTRAINT FK_DISTRICT_ON_CITY FOREIGN KEY (city_id) REFERENCES city (id);
 -----------------------------------------------------------------------------------------------------
+CREATE TABLE phone_code (
+  id UUID NOT NULL,
+   country_id UUID,
+   code VARCHAR(255),
+   CONSTRAINT pk_phone_code PRIMARY KEY (id)
+);
+
+ALTER TABLE phone_code ADD CONSTRAINT FK_PHONE_CODE_ON_COUNTRY FOREIGN KEY (country_id) REFERENCES country (id);
+-----------------------------------------------------------------------------------------------------------------
+CREATE TABLE address (
+  id UUID NOT NULL,
+   created_by VARCHAR(255),
+   updated_by VARCHAR(255),
+   created_at TIMESTAMP WITHOUT TIME ZONE,
+   updated_at TIMESTAMP WITHOUT TIME ZONE,
+   address VARCHAR(510),
+   district_id UUID,
+   address_type INTEGER,
+   postal_code VARCHAR(255),
+   phone_number VARCHAR(255),
+   customer_id UUID,
+   is_active BOOLEAN NOT NULL,
+   CONSTRAINT pk_address PRIMARY KEY (id)
+);
+
+ALTER TABLE address ADD CONSTRAINT FK_ADDRESS_ON_CUSTOMER FOREIGN KEY (customer_id) REFERENCES customers (id);
+ALTER TABLE address ADD CONSTRAINT FK_ADDRESS_ON_DISTRICT FOREIGN KEY (district_id) REFERENCES district (id);
+-----------------------------------------------------------------------------------------------------------------
+CREATE TABLE customers (
+  id UUID NOT NULL,
+   created_by VARCHAR(255),
+   updated_by VARCHAR(255),
+   created_at TIMESTAMP WITHOUT TIME ZONE,
+   updated_at TIMESTAMP WITHOUT TIME ZONE,
+   user_name VARCHAR(255) NOT NULL,
+   first_name VARCHAR(255) NOT NULL,
+   middle_name VARCHAR(255),
+   last_name VARCHAR(255) NOT NULL,
+   birth_date date NOT NULL,
+   gender_type INTEGER,
+   is_active BOOLEAN NOT NULL,
+   CONSTRAINT pk_customers PRIMARY KEY (id)
+);
+
+ALTER TABLE customers ADD CONSTRAINT uc_customers_user_name UNIQUE (user_name);
+----------------------------------------------------------------------------------------------------------------
 
 INSERT INTO "country" VALUES ('3e17fd59-5d4b-46f4-982b-90850ba1f7e0', 'TURKEY', 'TR', 'TUR');
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1078,3 +1124,5 @@ INSERT INTO "district" VALUES ('3165e876-c898-42be-b525-e9a5529221b2', 'd59eafe1
 INSERT INTO "district" VALUES ('16a2b9b1-0226-4e40-8176-77491a0e7b4c', 'd59eafe1-defe-4249-81b3-cb012d973eaf', 'GÜMÜŞOVA', '40.85000000', '30.93333330', '40.85363110', '30.94951100', '40.84116900', '30.93048900');
 INSERT INTO "district" VALUES ('b827619f-4fbd-42ad-a1ed-4fd38d26c691', 'd59eafe1-defe-4249-81b3-cb012d973eaf', 'KAYNAŞLI', '40.77733670', '31.30326690', '40.78193110', '31.31430100', '40.76946900', '31.29529900');
 INSERT INTO "district" VALUES ('eb4ffd96-3be9-4738-a0fc-90dc0a20848d', 'd59eafe1-defe-4249-81b3-cb012d973eaf', 'YIĞILCA', '40.96593900', '31.44241900', '40.96683110', '31.45152700', '40.95436900', '31.43247300');
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO "phone_code" VALUES ('5805398b-c049-4814-bd94-fce05bfbe252', '3e17fd59-5d4b-46f4-982b-90850ba1f7e0', '+90');
