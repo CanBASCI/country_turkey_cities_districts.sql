@@ -64,7 +64,7 @@ CREATE TABLE address (
 ALTER TABLE address ADD CONSTRAINT FK_ADDRESS_ON_CUSTOMER FOREIGN KEY (customer_id) REFERENCES customers (id);
 ALTER TABLE address ADD CONSTRAINT FK_ADDRESS_ON_DISTRICT FOREIGN KEY (district_id) REFERENCES district (id);
 -----------------------------------------------------------------------------------------------------------------
-CREATE TABLE customers (
+CREATE TABLE customer (
   id UUID NOT NULL,
    created_by VARCHAR(255),
    updated_by VARCHAR(255),
@@ -74,13 +74,15 @@ CREATE TABLE customers (
    first_name VARCHAR(255) NOT NULL,
    middle_name VARCHAR(255),
    last_name VARCHAR(255) NOT NULL,
+   email_number VARCHAR(255) NOT NULL,
    birth_date date NOT NULL,
    gender_type INTEGER,
+   identity_number VARCHAR(20),
    is_active BOOLEAN NOT NULL,
-   CONSTRAINT pk_customers PRIMARY KEY (id)
+   CONSTRAINT pk_customer PRIMARY KEY (id)
 );
 
-ALTER TABLE customers ADD CONSTRAINT uc_customers_user_name UNIQUE (user_name);
+ALTER TABLE customer ADD CONSTRAINT uc_customer_user_name UNIQUE (user_name);
 ----------------------------------------------------------------------------------------------------------------
 
 INSERT INTO "country" VALUES ('3e17fd59-5d4b-46f4-982b-90850ba1f7e0', 'TURKEY', 'TR', 'TUR');
